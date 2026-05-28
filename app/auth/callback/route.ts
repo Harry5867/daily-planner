@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase'
+import { createClient } from '@/lib/supabase-server'
 import { NextResponse } from 'next/server'
 
 export async function GET(request: Request) {
@@ -11,8 +11,7 @@ export async function GET(request: Request) {
     if (!error) {
       return NextResponse.redirect(`${origin}/`)
     }
-    console.error('Exchange error:', error)
   }
 
-  return NextResponse.redirect(`${origin}/?error=auth`)
+  return NextResponse.redirect(`${origin}/`)
 }
