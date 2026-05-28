@@ -114,13 +114,19 @@ function LoginScreen({ onLogin }: { onLogin: ()=>void }) {
     else onLogin()
   }
 
-  async function handleGoogle() {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: { redirectTo: `${location.origin}/auth/callback` }
-    })
-    if(error) setMsg(error.message)
-  }
+async function handleGoogle() {
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: { 
+      redirectTo: `${location.origin}/auth/callback`,
+      queryParams: {
+        access_type: 'offline',
+        prompt: 'consent',
+      }
+    }
+  })
+  if(error) setMsg(error.message)
+}
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4" style={{background:'var(--bg)'}}>
